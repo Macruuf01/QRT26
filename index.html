@@ -1,0 +1,2429 @@
+<!DOCTYPE html>
+<html lang="so">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Qaaraanka Sanadlaha ee Reer Taawle</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="authOverlay" class="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <form id="authForm" class="auth-card">
+            <div class="auth-mark">💚</div>
+            <p class="auth-eyebrow">REER TAAWLE · MAAMULKA QAARAANKA</p>
+            <h1 id="authTitle">Ku soo dhowow</h1>
+            <p id="authSubtitle" class="auth-copy">Geli password-ka laguu oggolaaday.</p>
+            <div id="authNotice" class="auth-notice" aria-live="polite"></div>
+            <div class="auth-fields">
+                <label for="authPassword">Password-ka gelitaanka</label>
+                <input id="authPassword" type="password" autocomplete="current-password" placeholder="Geli password-ka" required>
+            </div>
+            <button id="authSubmit" class="primary-btn auth-submit" type="submit">🔐 Gal</button>
+            <p class="auth-footnote">Isticmaal password-ka uu admin-ku ku siiyey.</p>
+        </form>
+    </div>
+<!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <h1>💚 Qaaraanka Sanadlaha ee Reer Taawle</h1>
+
+        <button onclick="showSection('dashboard')">
+            📊 Warbixin Guud
+        </button>
+
+        <button onclick="showSection('people')">
+            👥 Dadka
+        </button>
+
+        <button onclick="showSection('add')">
+            ➕ Ku dar qof
+        </button>
+
+        <button onclick="showSection('reports')">
+            📥 Warbixinnada
+        </button>
+
+        <button onclick="showSection('settings')" class="settings-nav">
+            ⚙️ Settings
+        </button>
+
+        <button onclick="shareWebsite()" class="share-nav">
+            🔗 Share Link
+        </button>
+
+        <button onclick="showSection('admins')">
+            👨‍💼 Admins
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+        <div class="app-topline"><span>Qaaraanka Sanadlaha</span><button type="button" class="logout-btn" onclick="logoutAdmin()">Ka bax ↗</button></div>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" class="section active">
+
+            <h2>📊 Warbixin Guud</h2>
+
+            <p class="subtitle">
+                Halkan waxaad ka arki kartaa guud ahaan xaaladda
+                Qaaraanka Sanadlaha ee Reer Taawle.
+            </p>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="icon">👥</div>
+
+                    <h3>Dadka</h3>
+
+                    <strong id="totalDadka">0</strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">💰</div>
+
+                    <h3>Total Sannadle</h3>
+
+                    <strong>
+                        $<span id="totalSanadlaha">0</span>
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">💵</div>
+
+                    <h3>La Bixiyay</h3>
+
+                    <strong>
+                        $<span id="totalBixiyay">0</span>
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">📉</div>
+
+                    <h3>Ka Dhiman</h3>
+
+                    <strong>
+                        $<span id="totalKaDhiman">0</span>
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="status-cards">
+
+                <div class="status paid">
+
+                    <h3>✅ Bixiyay</h3>
+
+                    <strong id="paidCount">0</strong>
+
+                </div>
+
+
+                <div class="status partial">
+
+                    <h3>🟡 Qayb bixiyay</h3>
+
+                    <strong id="partialCount">0</strong>
+
+                </div>
+
+
+                <div class="status unpaid">
+
+                    <h3>❌ Ma bixin</h3>
+
+                    <strong id="unpaidCount">0</strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PEOPLE -->
+
+        <section id="people" class="section">
+
+            <h2>👥 Xogta Qaaraanka</h2>
+
+            <p class="subtitle">
+                Halkan waxaad ka arki kartaa dhammaan dadka iyo
+                qaaraankooda.
+            </p>
+
+
+            <div class="toolbar">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔎 Raadi magac ama telefoon..."
+                    oninput="displayData()"
+                >
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="qaaraanTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Magaca</th>
+                            <th>Lambarka</th>
+                            <th>Sannadlaha</th>
+                            <th>La Bixiyay</th>
+                            <th>Ka Dhiman</th>
+                            <th>Xaaladda</th>
+                            <th>Taariikhda</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ADD PERSON -->
+
+        <section id="add" class="section">
+
+            <h2>➕ Ku dar qof cusub</h2>
+
+            <div id="message"></div>
+
+
+            <form id="qaaraanForm">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label>
+                            Magaca qofka
+                        </label>
+
+                        <input
+                            type="text"
+                            id="magaca"
+                            placeholder="Geli magaca"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Lambarka telefoonka
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lambarka"
+                            placeholder="Geli telefoonka"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Lacagta sannadlaha
+                        </label>
+
+                        <input
+                            type="number"
+                            id="sanadlaha"
+                            min="1"
+                            placeholder="Tusaale: 100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Lacagta uu bixiyay
+                        </label>
+
+                        <input
+                            type="number"
+                            id="bixiyay"
+                            min="0"
+                            placeholder="Tusaale: 50"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Taariikhda bixinta
+                        </label>
+
+                        <input
+                            type="date"
+                            id="taariikh"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <br>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="saveButton"
+                >
+                    💾 Kaydi qofka
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="cancelButton"
+                    style="display:none"
+                >
+                    ❌ Jooji
+                </button>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- REPORTS -->
+
+        <section id="reports" class="section">
+
+            <h2>📥 Warbixinnada</h2>
+
+            <p class="subtitle">
+                Xogta Qaaraanka waxaad u dhoofin kartaa
+                Excel, PDF ama Word.
+            </p>
+
+
+            <div class="export-buttons">
+
+                <button
+                    onclick="exportExcel()"
+                    class="excel"
+                >
+                    📊 Excel
+                </button>
+
+
+                <button
+                    onclick="exportPDF()"
+                    class="pdf"
+                >
+                    📄 PDF
+                </button>
+
+
+                <button
+                    onclick="exportWord()"
+                    class="word"
+                >
+                    📝 Word
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SETTINGS -->
+
+        <section id="settings" class="section">
+
+            <h2>⚙️ Settings</h2>
+
+            <p class="subtitle">
+                Halkan waxaad ka maamuli kartaa muuqaalka
+                website-ka, theme-ka iyo share link-ga.
+            </p>
+
+
+            <div class="settings-grid">
+
+
+                <!-- THEME -->
+
+                <div class="setting-card">
+
+                    <h3>🎨 Theme</h3>
+
+                    <div class="setting-row">
+
+                        <label>
+                            Muuqaalka Website-ka
+                        </label>
+
+                        <div class="theme-options">
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme="light"
+                                onclick="setTheme('light')"
+                            >
+                                ☀️ Light
+                            </button>
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme="dark"
+                                onclick="setTheme('dark')"
+                            >
+                                🌙 Dark
+                            </button>
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme="system"
+                                onclick="setTheme('system')"
+                            >
+                                💻 System
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SHARE -->
+
+                <div class="setting-card">
+
+                    <h3>🔗 Share Link</h3>
+
+                    <div class="setting-row">
+
+                        <label>
+                            La wadaag website-ka
+                        </label>
+
+                        <button
+                            type="button"
+                            class="share-btn"
+                            onclick="shareWebsite()"
+                        >
+                            🔗 Share Link
+                        </button>
+
+                    </div>
+
+
+                    <div class="copy-link-box">
+
+                        <input
+                            id="shareLink"
+                            type="text"
+                            readonly
+                        >
+
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            onclick="copyWebsiteLink()"
+                        >
+                            📋 Copy
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        id="shareMessage"
+                        class="subtitle"
+                    ></p>
+
+                </div>
+
+
+
+                <!-- RESPONSIVE -->
+
+                <div class="setting-card">
+
+                    <h3>📱 Responsive</h3>
+
+                    <div class="setting-row">
+
+                        <label>Mobile</label>
+
+                        <strong>✅ Ready</strong>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <label>Tablet</label>
+
+                        <strong>✅ Ready</strong>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <label>Laptop / Desktop</label>
+
+                        <strong>✅ Ready</strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DATA -->
+
+                <div class="setting-card">
+
+                    <h3>💾 Xogta</h3>
+
+                    <div class="setting-row">
+
+                        <label>
+                            Dadka iyo qaaraanka
+                        </label>
+
+                        <strong>
+                            🔒 La ilaalinayo
+                        </strong>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <label>
+                            Admins
+                        </label>
+
+                        <strong>
+                            🔒 La ilaalinayo
+                        </strong>
+
+                    </div>
+
+
+                    <p class="footer-note">
+
+                        Theme-ka iyo xogta hore waxaa lagu
+                        kaydinayaa browser-ka.
+                        Settings-ku ma beddelayo xogta dadka
+                        ama admins-ka.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ADMINS -->
+
+        <section id="admins" class="section">
+
+            <h2>👨‍💼 Admin Management</h2>
+
+            <p class="subtitle">
+                Halkan waxaa lagu maamuli karaa admins-ka
+                nidaamka.
+            </p>
+
+
+            <div id="adminMessage"></div>
+
+
+            <form id="adminForm">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label>
+                            Magaca Admin
+                        </label>
+
+                        <input
+                            type="text"
+                            id="adminName"
+                            placeholder="Magaca admin-ka"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            placeholder="Email-ka"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <br>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    👨‍💼 Ku dar Admin
+                </button>
+
+            </form>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Magaca</th>
+                            <th>Email</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="adminTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /* ================================
+           DATA
+        ================================= */
+
+        async function api(path, options = {}) {
+            const response = await fetch(path, {
+                credentials: "same-origin",
+                ...options,
+                headers: { "Content-Type": "application/json", ...(options.headers || {}) }
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.message || "Server-ka lama gaari karo.");
+            return result;
+        }
+
+        function updateAuthView(isAuthenticated) {
+            document.body.classList.toggle("is-authenticated", Boolean(isAuthenticated));
+        }
+
+        let sharedRevision = 0;
+        async function loadSharedData() {
+            let data = await api("/api/data");
+            if (data.revision === 0) {
+                const oldPeople = JSON.parse(localStorage.getItem("qaaraanDadka") || "[]");
+                const oldAdmins = JSON.parse(localStorage.getItem("qaaraanAdmins") || "[]");
+                if (oldPeople.length || oldAdmins.length) {
+                    await api("/api/data", { method:"PUT", body:JSON.stringify({people:oldPeople,admins:oldAdmins,revision:0}) });
+                    data = await api("/api/data");
+                }
+            }
+            sharedRevision = data.revision;
+            dadka = Array.isArray(data.people) ? data.people : [];
+            admins = Array.isArray(data.admins) ? data.admins : [];
+            displayData();
+            updateDashboard();
+            displayAdmins();
+        }
+
+        document.getElementById("authForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const notice = document.getElementById("authNotice");
+            const submit = document.getElementById("authSubmit");
+            submit.disabled = true;
+            try {
+                await api("/api/login", {
+                    method: "POST",
+                    body: JSON.stringify({ password: document.getElementById("authPassword").value })
+                });
+                await loadSharedData();
+                notice.textContent = "";
+                this.reset();
+                updateAuthView(true);
+            } catch (error) {
+                notice.textContent = error.message;
+            } finally {
+                submit.disabled = false;
+            }
+        });
+
+        async function logoutAdmin() {
+            try { await api("/api/logout", { method: "POST", body: "{}" }); } catch (_) {}
+            updateAuthView(false);
+        }
+
+        async function restoreSession() {
+            try {
+                await api("/api/me");
+                await loadSharedData();
+                updateAuthView(true);
+            } catch (_) {
+                updateAuthView(false);
+            }
+        }
+        let dadka = [];
+
+
+        let admins = [];
+
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
+        }
+        let editingId = null;
+
+
+
+        /* ================================
+           SHOW SECTION
+        ================================= */
+
+        function showSection(sectionName) {
+
+            document
+                .querySelectorAll(".section")
+                .forEach(function(section) {
+
+                    section.classList.remove("active");
+
+                });
+
+
+            const section =
+                document.getElementById(sectionName);
+
+
+            if (section) {
+
+                section.classList.add("active");
+
+            }
+
+
+            if (sectionName === "people") {
+
+                displayData();
+
+            }
+
+
+            if (sectionName === "dashboard") {
+
+                updateDashboard();
+
+            }
+
+
+            if (sectionName === "admins") {
+
+                displayAdmins();
+
+            }
+
+        }
+
+
+
+        /* ================================
+           MESSAGE
+        ================================= */
+
+        function showMessage(
+            text,
+            type = "success"
+        ) {
+
+            const box =
+                document.querySelector("#message");
+
+
+            box.textContent = text;
+
+
+            box.className =
+                "message " + type;
+
+
+            setTimeout(function() {
+
+                box.textContent = "";
+
+                box.className = "";
+
+            }, 3500);
+
+        }
+
+
+
+        /* ================================
+           ADD / EDIT PERSON
+        ================================= */
+
+        document
+            .querySelector("#qaaraanForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        document
+                            .querySelector("#magaca")
+                            .value
+                            .trim();
+
+
+                    const phone =
+                        document
+                            .querySelector("#lambarka")
+                            .value
+                            .trim();
+
+
+                    const annual =
+                        Number(
+                            document
+                                .querySelector("#sanadlaha")
+                                .value
+                        );
+
+
+                    const paid =
+                        Number(
+                            document
+                                .querySelector("#bixiyay")
+                                .value
+                        );
+
+
+                    const date =
+                        document
+                            .querySelector("#taariikh")
+                            .value;
+
+
+
+                    /* EMPTY CHECK */
+
+                    if (
+                        name === "" ||
+                        phone === "" ||
+                        date === ""
+                    ) {
+
+                        showMessage(
+                            "⚠️ Fadlan buuxi dhammaan meelaha.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* ANNUAL CHECK */
+
+                    if (annual <= 0) {
+
+                        showMessage(
+                            "⚠️ Lacagta sannadlaha waa inay ka weyn tahay 0.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* PAID CHECK */
+
+                    if (paid < 0) {
+
+                        showMessage(
+                            "⚠️ Lacagta la bixiyay ma noqon karto negative.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* PAID CANNOT EXCEED ANNUAL */
+
+                    if (paid > annual) {
+
+                        showMessage(
+                            "⚠️ Lacagta la bixiyay kama badnaan karto sannadlaha.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* DUPLICATE PHONE */
+
+                    const duplicate =
+                        dadka.find(function(person) {
+
+                            return (
+                                person.lambarka === phone &&
+                                person.id !== editingId
+                            );
+
+                        });
+
+
+                    if (duplicate) {
+
+                        showMessage(
+                            "🚫 Qofkan hore ayaa loo geliyay.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* REMAINING */
+
+                    const remaining =
+                        annual - paid;
+
+
+
+                    /* STATUS */
+
+                    let status;
+
+
+                    if (remaining === 0) {
+
+                        status = "✅ Bixiyay";
+
+                    }
+                    else if (paid > 0) {
+
+                        status = "🟡 Qayb bixiyay";
+
+                    }
+                    else {
+
+                        status = "❌ Ma bixin";
+
+                    }
+
+
+
+                    /* EDIT */
+
+                    if (editingId !== null) {
+
+                        const person =
+                            dadka.find(function(p) {
+
+                                return p.id === editingId;
+
+                            });
+
+
+                        if (person) {
+
+                            person.magaca =
+                                name;
+
+                            person.lambarka =
+                                phone;
+
+                            person.sanadlaha =
+                                annual;
+
+                            person.bixiyay =
+                                paid;
+
+                            person.kaDhiman =
+                                remaining;
+
+                            person.xaalad =
+                                status;
+
+                            person.taariikh =
+                                date;
+
+                        }
+
+
+                        editingId = null;
+
+
+                        document
+                            .querySelector("#saveButton")
+                            .textContent =
+                            "💾 Kaydi qofka";
+
+
+                        document
+                            .querySelector("#cancelButton")
+                            .style.display =
+                            "none";
+
+
+                        showMessage(
+                            "✅ Xogta waa la cusboonaysiiyay."
+                        );
+
+                    }
+
+
+                    /* NEW PERSON */
+
+                    else {
+
+                        dadka.push({
+
+                            id:
+                                Date.now().toString(),
+
+                            magaca:
+                                name,
+
+                            lambarka:
+                                phone,
+
+                            sanadlaha:
+                                annual,
+
+                            bixiyay:
+                                paid,
+
+                            kaDhiman:
+                                remaining,
+
+                            xaalad:
+                                status,
+
+                            taariikh:
+                                date
+
+                        });
+
+
+                        showMessage(
+                            "✅ Qofka si sax ah ayaa loo kaydiyay."
+                        );
+
+                    }
+
+
+
+                    saveData();
+
+
+                    document
+                        .querySelector("#qaaraanForm")
+                        .reset();
+
+
+                    displayData();
+
+
+                    updateDashboard();
+
+                });
+
+
+
+        /* ================================
+           SAVE DATA
+        ================================= */
+
+        function saveData() {
+            return api("/api/data", { method: "PUT", body: JSON.stringify({ people: dadka, admins, revision: sharedRevision }) })
+                .then(result => { sharedRevision = result.revision; })
+                .catch(error => showMessage(error.message === "Xogta way is beddeshay browser kale." ? "⚠️ Browser kale ayaa xogta beddelay. Bogga dib u cusboonaysii ka hor intaadan kaydin." : "❌ Xogta lama kaydin: " + error.message, "error"));
+        }
+
+
+
+        /* ================================
+           DISPLAY PEOPLE
+        ================================= */
+
+        function displayData() {
+
+            const body =
+                document.querySelector("#tableBody");
+
+
+            if (!body) {
+
+                return;
+
+            }
+
+
+            body.innerHTML = "";
+
+
+            const searchInput =
+                document.querySelector("#searchInput");
+
+
+            const search =
+                searchInput
+                    ? searchInput.value.toLowerCase().trim()
+                    : "";
+
+
+            const filtered =
+                dadka.filter(function(person) {
+
+                    return (
+                        String(person.magaca || "")
+                            .toLowerCase()
+                            .includes(search)
+                        ||
+                        String(person.lambarka || "")
+                            .toLowerCase()
+                            .includes(search)
+                    );
+
+                });
+
+
+
+            filtered.forEach(
+                function(person) {
+
+                    const originalIndex =
+                        dadka.findIndex(
+                            function(p) {
+
+                                return (
+                                    p.id ===
+                                    person.id
+                                );
+
+                            }
+                        );
+
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${originalIndex + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(person.magaca)}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(person.lambarka)}
+                        </td>
+
+                        <td>
+                            $${person.sanadlaha}
+                        </td>
+
+                        <td>
+                            $${person.bixiyay}
+                        </td>
+
+                        <td>
+                            $${person.kaDhiman}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(person.xaalad)}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(person.taariikh)}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="edit-btn"
+                                onclick="editPerson('${person.id}')"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deletePerson('${person.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    `;
+
+
+                    body.appendChild(row);
+
+                }
+            );
+
+        }
+
+
+
+        /* ================================
+           DELETE PERSON
+        ================================= */
+
+        function deletePerson(id) {
+
+            if (
+                !confirm(
+                    "Ma hubtaa inaad qofkan tirtirayso?"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            dadka =
+                dadka.filter(
+                    function(person) {
+
+                        return person.id !== id;
+
+                    }
+                );
+
+
+            saveData();
+
+            displayData();
+
+            updateDashboard();
+
+
+            showMessage(
+                "🗑️ Qofka waa la tirtiray."
+            );
+
+        }
+
+
+
+        /* ================================
+           EDIT PERSON
+        ================================= */
+
+        function editPerson(id) {
+
+            const person =
+                dadka.find(
+                    function(p) {
+
+                        return p.id === id;
+
+                    }
+                );
+
+
+            if (!person) {
+
+                return;
+
+            }
+
+
+            document
+                .querySelector("#magaca")
+                .value =
+                person.magaca;
+
+
+            document
+                .querySelector("#lambarka")
+                .value =
+                person.lambarka;
+
+
+            document
+                .querySelector("#sanadlaha")
+                .value =
+                person.sanadlaha;
+
+
+            document
+                .querySelector("#bixiyay")
+                .value =
+                person.bixiyay;
+
+
+            document
+                .querySelector("#taariikh")
+                .value =
+                person.taariikh;
+
+
+            editingId = id;
+
+
+            document
+                .querySelector("#saveButton")
+                .textContent =
+                "💾 Cusboonaysii xogta";
+
+
+            document
+                .querySelector("#cancelButton")
+                .style.display =
+                "inline-block";
+
+
+            showSection("add");
+
+        }
+
+
+
+        /* ================================
+           CANCEL EDIT
+        ================================= */
+
+        document
+            .querySelector("#cancelButton")
+            .addEventListener(
+                "click",
+                function() {
+
+                    editingId = null;
+
+
+                    document
+                        .querySelector("#qaaraanForm")
+                        .reset();
+
+
+                    document
+                        .querySelector("#saveButton")
+                        .textContent =
+                        "💾 Kaydi qofka";
+
+
+                    this.style.display =
+                        "none";
+
+                }
+            );
+
+
+
+        /* ================================
+           DASHBOARD
+        ================================= */
+
+        function updateDashboard() {
+
+            let annual = 0;
+
+            let paid = 0;
+
+            let remaining = 0;
+
+            let paidCount = 0;
+
+            let partialCount = 0;
+
+            let unpaidCount = 0;
+
+
+
+            dadka.forEach(
+                function(person) {
+
+                    annual +=
+                        Number(
+                            person.sanadlaha
+                        ) || 0;
+
+
+                    paid +=
+                        Number(
+                            person.bixiyay
+                        ) || 0;
+
+
+                    remaining +=
+                        Number(
+                            person.kaDhiman
+                        ) || 0;
+
+
+
+                    if (
+                        Number(person.kaDhiman) === 0
+                    ) {
+
+                        paidCount++;
+
+                    }
+                    else if (
+                        Number(person.bixiyay) > 0
+                    ) {
+
+                        partialCount++;
+
+                    }
+                    else {
+
+                        unpaidCount++;
+
+                    }
+
+                }
+            );
+
+
+
+            document
+                .querySelector("#totalDadka")
+                .textContent =
+                dadka.length;
+
+
+            document
+                .querySelector("#totalSanadlaha")
+                .textContent =
+                annual.toLocaleString();
+
+
+            document
+                .querySelector("#totalBixiyay")
+                .textContent =
+                paid.toLocaleString();
+
+
+            document
+                .querySelector("#totalKaDhiman")
+                .textContent =
+                remaining.toLocaleString();
+
+
+            document
+                .querySelector("#paidCount")
+                .textContent =
+                paidCount;
+
+
+            document
+                .querySelector("#partialCount")
+                .textContent =
+                partialCount;
+
+
+            document
+                .querySelector("#unpaidCount")
+                .textContent =
+                unpaidCount;
+
+        }
+
+
+
+        /* ================================
+           EXPORT EXCEL / CSV
+        ================================= */
+
+        function exportExcel() {
+
+            if (dadka.length === 0) {
+
+                alert(
+                    "Ma jiro xog la dhoofinayo."
+                );
+
+                return;
+
+            }
+
+
+            let csv =
+                "No,Magaca,Lambarka,Sannadlaha,La Bixiyay,Ka Dhiman,Xaaladda,Taariikhda\n";
+
+
+            dadka.forEach(
+                function(person, index) {
+
+                    csv +=
+                        `${index + 1},` +
+                        `"${escapeHTML(person.magaca)}",` +
+                        `"${escapeHTML(person.lambarka)}",` +
+                        `${person.sanadlaha},` +
+                        `${person.bixiyay},` +
+                        `${person.kaDhiman},` +
+                        `"${escapeHTML(person.xaalad)}",` +
+                        `"${escapeHTML(person.taariikh)}"\n`;
+
+                }
+            );
+
+
+            const blob =
+                new Blob(
+                    [csv],
+                    {
+                        type:
+                            "text/csv;charset=utf-8;"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href = url;
+
+
+            link.download =
+                "Qaaraanka-Reer-Taawle.csv";
+
+
+            document
+                .body
+                .appendChild(link);
+
+
+            link.click();
+
+
+            link.remove();
+
+
+            URL.revokeObjectURL(url);
+
+        }
+
+
+
+        /* ================================
+           PDF
+        ================================= */
+
+        function exportPDF() {
+
+            if (dadka.length === 0) {
+
+                alert(
+                    "Ma jiro xog la dhoofinayo."
+                );
+
+                return;
+
+            }
+
+
+            const printWindow =
+                window.open(
+                    "",
+                    "_blank"
+                );
+
+
+            if (!printWindow) {
+
+                alert(
+                    "Fadlan ogolow pop-up-ka browser-ka."
+                );
+
+                return;
+
+            }
+
+
+            let rows = "";
+
+
+            dadka.forEach(
+                function(person, index) {
+
+                    rows += `
+
+                        <tr>
+
+                            <td>${index + 1}</td>
+
+                            <td>${escapeHTML(person.magaca)}</td>
+
+                            <td>${escapeHTML(person.lambarka)}</td>
+
+                            <td>$${person.sanadlaha}</td>
+
+                            <td>$${person.bixiyay}</td>
+
+                            <td>$${person.kaDhiman}</td>
+
+                            <td>${escapeHTML(person.xaalad)}</td>
+
+                            <td>${escapeHTML(person.taariikh)}</td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            printWindow.document.write(`
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <title>
+                        Qaaraanka Sanadlaha ee Reer Taawle
+                    </title>
+
+                    <style>
+
+                        body {
+                            font-family: Arial;
+                            padding: 30px;
+                        }
+
+                        h1 {
+                            color: #087f5b;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        th {
+                            background: #087f5b;
+                            color: white;
+                        }
+
+                        th,
+                        td {
+                            border: 1px solid #ccc;
+                            padding: 8px;
+                            text-align: center;
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    <h1>
+                        Qaaraanka Sanadlaha ee Reer Taawle
+                    </h1>
+
+                    <h2>
+                        Warbixin Guud
+                    </h2>
+
+                    <table>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Magaca</th>
+                            <th>Lambarka</th>
+                            <th>Sannadlaha</th>
+                            <th>La Bixiyay</th>
+                            <th>Ka Dhiman</th>
+                            <th>Xaaladda</th>
+                            <th>Taariikhda</th>
+
+                        </tr>
+
+                        ${rows}
+
+                    </table>
+
+                    <br>
+
+                    <strong>
+                        Total Dadka:
+                        ${dadka.length}
+                    </strong>
+
+                    <br><br>
+
+                    <strong>
+                        Total Sannadle:
+                        $${dadka.reduce(
+                            (sum, p) =>
+                                sum + Number(p.sanadlaha || 0),
+                            0
+                        )}
+                    </strong>
+
+                    <br><br>
+
+                    <strong>
+                        La Bixiyay:
+                        $${dadka.reduce(
+                            (sum, p) =>
+                                sum + Number(p.bixiyay || 0),
+                            0
+                        )}
+                    </strong>
+
+                </body>
+
+                </html>
+
+            `);
+
+
+            printWindow.document.close();
+
+            printWindow.print();
+
+        }
+
+
+
+        /* ================================
+           WORD
+        ================================= */
+
+        function exportWord() {
+
+            if (dadka.length === 0) {
+
+                alert(
+                    "Ma jiro xog la dhoofinayo."
+                );
+
+                return;
+
+            }
+
+
+            let rows = "";
+
+
+            dadka.forEach(
+                function(person, index) {
+
+                    rows += `
+
+                        <tr>
+
+                            <td>${index + 1}</td>
+
+                            <td>${escapeHTML(person.magaca)}</td>
+
+                            <td>${escapeHTML(person.lambarka)}</td>
+
+                            <td>$${person.sanadlaha}</td>
+
+                            <td>$${person.bixiyay}</td>
+
+                            <td>$${person.kaDhiman}</td>
+
+                            <td>${escapeHTML(person.xaalad)}</td>
+
+                            <td>${escapeHTML(person.taariikh)}</td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            const html = `
+
+                <html>
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                </head>
+
+                <body>
+
+                    <h1>
+                        Qaaraanka Sanadlaha ee Reer Taawle
+                    </h1>
+
+                    <h2>
+                        Warbixin Guud
+                    </h2>
+
+                    <table border="1">
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Magaca</th>
+                            <th>Lambarka</th>
+                            <th>Sannadlaha</th>
+                            <th>La Bixiyay</th>
+                            <th>Ka Dhiman</th>
+                            <th>Xaaladda</th>
+                            <th>Taariikhda</th>
+
+                        </tr>
+
+                        ${rows}
+
+                    </table>
+
+                </body>
+
+                </html>
+
+            `;
+
+
+            const blob =
+                new Blob(
+                    [
+                        "\ufeff",
+                        html
+                    ],
+                    {
+                        type:
+                            "application/msword"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href = url;
+
+
+            link.download =
+                "Qaaraanka-Reer-Taawle.doc";
+
+
+            document
+                .body
+                .appendChild(link);
+
+
+            link.click();
+
+
+            link.remove();
+
+
+            URL.revokeObjectURL(url);
+
+        }
+
+
+
+        /* ================================
+           ADMIN ADD
+        ================================= */
+
+        document
+            .querySelector("#adminForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        document
+                            .querySelector("#adminName")
+                            .value
+                            .trim();
+
+
+                    const email =
+                        document
+                            .querySelector("#adminEmail")
+                            .value
+                            .trim()
+                            .toLowerCase();
+
+
+                    if (!name || !email) {
+
+                        return;
+
+                    }
+
+
+                    const duplicate =
+                        admins.find(
+                            function(admin) {
+
+                                return (
+                                    admin.email ===
+                                    email
+                                );
+
+                            }
+                        );
+
+
+                    if (duplicate) {
+
+                        document
+                            .querySelector(
+                                "#adminMessage"
+                            )
+                            .textContent =
+                            "🚫 Email-kan hore ayaa admin loogu daray.";
+
+                        return;
+
+                    }
+
+
+                    admins.push({
+
+                        id:
+                            Date.now().toString(),
+
+                        name:
+                            name,
+
+                        email:
+                            email
+
+                    });
+
+
+                    saveData();
+
+
+                    this.reset();
+
+
+                    document
+                        .querySelector(
+                            "#adminMessage"
+                        )
+                        .textContent =
+                        "✅ Admin-ka waa lagu daray.";
+
+
+                    displayAdmins();
+
+                }
+            );
+
+
+
+        /* ================================
+           DISPLAY ADMINS
+        ================================= */
+
+        function displayAdmins() {
+
+            const table =
+                document.querySelector(
+                    "#adminTable"
+                );
+
+
+            if (!table) {
+
+                return;
+
+            }
+
+
+            table.innerHTML = "";
+
+
+            admins.forEach(
+                function(admin, index) {
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(admin.name)}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(admin.email)}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteAdmin('${admin.id}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(row);
+
+                }
+            );
+
+        }
+
+
+
+        /* ================================
+           DELETE ADMIN
+        ================================= */
+
+        function deleteAdmin(id) {
+
+            if (
+                !confirm(
+                    "Ma tirtirtaa admin-kan?"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            admins =
+                admins.filter(
+                    function(admin) {
+
+                        return admin.id !== id;
+
+                    }
+                );
+
+
+            saveData();
+
+
+            displayAdmins();
+
+        }
+
+
+
+        /* ================================
+           SETTINGS / THEME
+        ================================= */
+
+        function applyTheme(theme) {
+
+            document.body.classList.remove(
+                "light-theme",
+                "dark-theme",
+                "system-theme"
+            );
+
+
+            if (theme === "dark") {
+
+                document.body.classList.add(
+                    "dark-theme"
+                );
+
+            }
+
+            else if (theme === "system") {
+
+                document.body.classList.add(
+                    "system-theme"
+                );
+
+            }
+
+            else {
+
+                document.body.classList.add(
+                    "light-theme"
+                );
+
+            }
+
+
+            document
+                .querySelectorAll(".theme-option")
+                .forEach(function(button) {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.theme === theme
+                    );
+
+                });
+
+
+            const link =
+                document.querySelector("#shareLink");
+
+
+            if (link) {
+
+                link.value =
+                    window.location.href;
+
+            }
+
+        }
+
+
+
+        function setTheme(theme) {
+
+            localStorage.setItem(
+                "qaaraanTheme",
+                theme
+            );
+
+
+            applyTheme(theme);
+
+
+            showShareMessage(
+                "✅ Theme-ka waa la beddelay."
+            );
+
+        }
+
+
+
+        /* ================================
+           COPY LINK
+        ================================= */
+
+        async function copyWebsiteLink() {
+
+            if (window.location.protocol === "file:") {
+                showShareMessage("⚠️ Website-ka wali internetka laguma daabicin.");
+                return;
+            }
+
+            const url =
+                window.location.href;
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    url
+                );
+
+
+                showShareMessage(
+                    "✅ Link-ga waa la koobiyeeyay."
+                );
+
+            }
+
+            catch (error) {
+
+                const input =
+                    document.querySelector(
+                        "#shareLink"
+                    );
+
+
+                input.focus();
+
+                input.select();
+
+                document.execCommand("copy");
+
+
+                showShareMessage(
+                    "✅ Link-ga waa la koobiyeeyay."
+                );
+
+            }
+
+        }
+
+
+
+        /* ================================
+           SHARE WEBSITE
+        ================================= */
+
+        async function shareWebsite() {
+
+            if (window.location.protocol === "file:") {
+                showShareMessage("⚠️ Marka hore website-ka internetka ku daabac.");
+                return;
+            }
+
+            const data = {
+
+                title:
+                    "Qaaraanka Sanadlaha ee Reer Taawle",
+
+                text:
+                    "Qaaraanka Sanadlaha ee Reer Taawle",
+
+                url:
+                    window.location.href
+
+            };
+
+
+            try {
+
+                if (navigator.share) {
+
+                    await navigator.share(data);
+
+                }
+
+                else {
+
+                    await copyWebsiteLink();
+
+                }
+
+            }
+
+            catch (error) {
+
+                if (
+                    error.name !==
+                    "AbortError"
+                ) {
+
+                    showShareMessage(
+                        "⚠️ Share-ka lama dhamaystirin."
+                    );
+
+                }
+
+            }
+
+        }
+
+
+
+        /* ================================
+           SHARE MESSAGE
+        ================================= */
+
+        function showShareMessage(text) {
+
+            const message =
+                document.querySelector(
+                    "#shareMessage"
+                );
+
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            message.textContent = text;
+
+
+            setTimeout(
+                function() {
+
+                    message.textContent = "";
+
+                },
+                3500
+            );
+
+        }
+
+
+
+        /* ================================
+           LOAD SETTINGS
+        ================================= */
+
+        function loadSettings() {
+
+            const theme =
+                localStorage.getItem(
+                    "qaaraanTheme"
+                ) || "light";
+
+
+            applyTheme(theme);
+
+        }
+
+
+
+        /* ================================
+           START
+        ================================= */
+
+        loadSettings();
+        restoreSession();
+
+    </script>
+
+</body>
+
+</html>
+
+
+
+
