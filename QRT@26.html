@@ -1,0 +1,3961 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Qaaraanka Sanadlaha ee Reer Taawle</title>
+
+<style>
+:root{
+  --green:#087f5b;
+  --green2:#0ca073;
+  --deep:#063f30;
+  --bg:#eef5f2;
+  --card:#ffffff;
+  --text:#20332d;
+  --muted:#71817b;
+  --border:#e0ebe6;
+  --danger:#d92d3a;
+  --warning:#b77900;
+  --blue:#2167c7;
+  --purple:#7650d6;
+  --shadow:0 10px 30px rgba(5,63,48,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  width:255px;
+  background:linear-gradient(180deg,var(--green),var(--deep));
+  color:white;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:22px 15px;
+  z-index:1000;
+  overflow-y:auto;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:5px 8px 25px;
+}
+
+.logo-icon{
+  width:45px;
+  height:45px;
+  border-radius:14px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.logo-text strong{
+  display:block;
+  font-size:16px;
+  line-height:1.3;
+}
+
+.logo-text span{
+  font-size:11px;
+  opacity:.8;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:rgba(255,255,255,.82);
+  padding:13px 14px;
+  border-radius:12px;
+  text-align:left;
+  font-weight:600;
+  transition:.2s;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:rgba(255,255,255,.14);
+  color:white;
+}
+
+.nav button.active{
+  box-shadow:inset 3px 0 0 white;
+}
+
+.sidebar-bottom{
+  margin-top:25px;
+  padding-top:15px;
+  border-top:1px solid rgba(255,255,255,.13);
+}
+
+.status-online{
+  font-size:12px;
+  color:#c8f7e6;
+  padding:8px;
+}
+
+.status-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  background:#45e19b;
+  border-radius:50%;
+  margin-right:5px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+  margin-left:255px;
+  width:calc(100% - 255px);
+  min-height:100vh;
+}
+
+.topbar{
+  height:72px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:900;
+}
+
+.topbar-title h1{
+  font-size:22px;
+}
+
+.topbar-title p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.container{
+  padding:28px;
+  max-width:1600px;
+  margin:auto;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* ================= WELCOME ================= */
+
+.welcome{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:white;
+  border-radius:22px;
+  padding:28px;
+  margin-bottom:22px;
+  box-shadow:var(--shadow);
+}
+
+.welcome h2{
+  font-size:25px;
+  margin-bottom:7px;
+}
+
+.welcome p{
+  opacity:.9;
+  max-width:750px;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.stat-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.stat-card::after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  right:-25px;
+  top:-25px;
+  background:rgba(8,127,91,.06);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:9px;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:10px;
+}
+
+.green-text{color:var(--green)}
+.blue-text{color:var(--blue)}
+.warning-text{color:var(--warning)}
+.danger-text{color:var(--danger)}
+.purple-text{color:var(--purple)}
+
+/* ================= STATUS ================= */
+
+.status-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.status-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:var(--shadow);
+}
+
+.status-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.status-number{
+  font-size:24px;
+  font-weight:800;
+}
+
+/* ================= GRID ================= */
+
+.two-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.three-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+
+.toolbar-left,
+.toolbar-right{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.search{
+  min-width:280px;
+}
+
+/* ================= BUTTONS ================= */
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:11px 15px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--green);
+  color:white;
+}
+
+.btn-primary:hover{
+  background:var(--green2);
+}
+
+.btn-light{
+  background:#f2f7f5;
+  color:var(--deep);
+  border:1px solid var(--border);
+}
+
+.btn-danger{
+  background:#fff0f1;
+  color:var(--danger);
+}
+
+.btn-blue{
+  background:#edf4ff;
+  color:var(--blue);
+}
+
+.btn-purple{
+  background:#f3efff;
+  color:var(--purple);
+}
+
+.btn-sm{
+  padding:7px 10px;
+  font-size:12px;
+}
+
+/* ================= FORMS ================= */
+
+.form-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+.form-group label{
+  font-size:13px;
+  font-weight:700;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:11px;
+  padding:12px 13px;
+  outline:none;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(8,127,91,.08);
+}
+
+.form-actions{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+}
+
+/* ================= TABLE ================= */
+
+.table-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.table-scroll{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:900px;
+}
+
+th,
+td{
+  padding:14px 13px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+th{
+  background:#f7faf9;
+  color:var(--deep);
+  font-size:12px;
+}
+
+tbody tr:hover{
+  background:#fbfdfc;
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+}
+
+/* ================= BADGES ================= */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border-radius:20px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.badge-paid{
+  background:#e9f9f1;
+  color:#087f5b;
+}
+
+.badge-partial{
+  background:#fff6dd;
+  color:#a66a00;
+}
+
+.badge-unpaid{
+  background:#fff0f1;
+  color:#c52332;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+/* ================= REPORTS ================= */
+
+.report-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.report-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+/* ================= ACTIVITY ================= */
+
+/* ================= SETTINGS ================= */
+
+.setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+  border-bottom:0;
+}
+
+.setting-info strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.setting-info span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.share-box{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.share-box input{
+  flex:1;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:2000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-content{
+  background:var(--card);
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 25px 70px rgba(0,0,0,.2);
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close-btn{
+  border:0;
+  background:#f2f5f4;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  background:#123d31;
+  color:white;
+  padding:14px 18px;
+  border-radius:12px;
+  box-shadow:0 15px 35px rgba(0,0,0,.2);
+  transform:translateY(100px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:3000;
+  max-width:350px;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.toast.error{
+  background:#9e2430;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(3px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:4000;
+}
+
+.loading.show{
+  display:flex;
+}
+
+.loading-box{
+  background:white;
+  padding:25px 30px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.spinner{
+  width:35px;
+  height:35px;
+  border:4px solid #dcece6;
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ================= DARK ================= */
+
+body.dark{
+  --bg:#101917;
+  --card:#17231f;
+  --text:#e7f1ed;
+  --muted:#9aaba5;
+  --border:#293b35;
+  --shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+body.dark .topbar,
+body.dark th{
+  background:#17231f;
+}
+
+body.dark .btn-light{
+  background:#21312c;
+  color:#e7f1ed;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea{
+  background:#17231f;
+  color:#e7f1ed;
+}
+
+body.dark .loading{
+  background:rgba(0,0,0,.7);
+}
+
+body.dark .loading-box{
+  background:#17231f;
+}
+
+/* ================= MOBILE ================= */
+
+.mobile-menu{
+  display:none;
+  border:0;
+  background:#f0f6f3;
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  font-size:20px;
+}
+
+@media(max-width:1100px){
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .three-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:850px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+    width:275px;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .topbar{
+    padding:0 16px;
+  }
+
+  .container{
+    padding:18px 14px;
+  }
+
+  .two-grid{
+    grid-template-columns:1fr;
+  }
+
+  .status-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+
+  .topbar{
+    height:auto;
+    min-height:68px;
+    gap:10px;
+  }
+
+  .topbar-title h1{
+    font-size:17px;
+  }
+
+  .topbar-title p{
+    font-size:10px;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .card{
+    padding:15px;
+    border-radius:15px;
+  }
+
+  .stat-value{
+    font-size:19px;
+  }
+
+  .stat-icon{
+    font-size:20px;
+  }
+
+  .welcome{
+    padding:20px;
+    border-radius:17px;
+  }
+
+  .welcome h2{
+    font-size:20px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .search{
+    min-width:100%;
+  }
+
+  .toolbar{
+    align-items:stretch;
+  }
+
+  .toolbar-left,
+  .toolbar-right{
+    width:100%;
+  }
+
+  .toolbar .btn{
+    flex:1;
+  }
+
+  .three-grid{
+    grid-template-columns:1fr;
+  }
+
+  .share-box{
+    flex-direction:column;
+  }
+
+  .setting-row{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .toast{
+    right:14px;
+    left:14px;
+    bottom:14px;
+  }
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+
+  .sidebar,
+  .topbar,
+  .toolbar,
+  .btn,
+  .mobile-menu{
+    display:none!important;
+  }
+
+  .main{
+    margin:0;
+    width:100%;
+  }
+
+  .container{
+    padding:0;
+  }
+
+  .section{
+    display:none!important;
+  }
+
+  #reports{
+    display:block!important;
+  }
+
+  body{
+    background:white;
+  }
+
+  .card,
+  .table-card,
+  .report-box{
+    box-shadow:none;
+  }
+}
+
+.entry-overlay{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,rgba(6,63,48,.96),rgba(8,127,91,.94));}
+.entry-overlay.hidden{display:none;}.entry-card{width:min(100%,420px);background:#fff;border-radius:22px;padding:30px;box-shadow:0 24px 70px rgba(0,0,0,.25);color:#20332d;}.entry-logo{width:64px;height:64px;margin:0 auto 14px;display:grid;place-items:center;border-radius:20px;background:#e7f7ef;font-size:32px;}.entry-card h2{text-align:center;margin-bottom:8px;color:#063f30;}.entry-card p{text-align:center;color:#71817b;font-size:14px;line-height:1.5;margin-bottom:22px;}.entry-field{margin-bottom:15px;}.entry-field label{display:block;font-weight:700;font-size:13px;margin-bottom:7px;}.entry-field input{width:100%;padding:13px 14px;border:1px solid #d5e4dd;border-radius:11px;outline:none;}.entry-field input:focus{border-color:#0ca073;box-shadow:0 0 0 3px rgba(12,160,115,.12);}.entry-submit{width:100%;padding:13px;border:0;border-radius:11px;background:linear-gradient(135deg,#0ca073,#087f5b);color:#fff;font-weight:700;}.entry-error{display:none;margin-top:12px;color:#d92d3a;font-size:13px;text-align:center;}
+
+</style>
+</head>
+
+<body>
+
+<div class="entry-overlay" id="entryOverlay"><form class="entry-card" id="entryForm"><div class="entry-logo">💚</div><h2>Kusoo dhawaaw Website-ka Reer Taawle 💚</h2><p>Fadlan geli magacaaga iyo furaha gelitaanka si aad u isticmaasho website-ka.</p><div class="entry-field"><label for="entryName">Magacaaga</label><input id="entryName" type="text" autocomplete="name" maxlength="100" required placeholder="Geli magacaaga"></div><div class="entry-field"><label for="entryCode">Furaha gelitaanka</label><input id="entryCode" type="password" autocomplete="off" required placeholder="Geli furaha gelitaanka"></div><button class="entry-submit" id="entrySubmit" type="submit">🔓 Gal website-ka</button><div class="entry-error" id="entryError" role="alert"></div></form></div>
+
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="logo">
+    <div class="logo-icon">💚</div>
+    <div class="logo-text">
+      <strong>Qaaraanka<br>Reer Taawle</strong>
+      <span>Maamulka Maaliyadda</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+
+    <button class="nav-btn active" data-section="dashboard">
+      📊 Warbixin Guud
+    </button>
+
+    <button class="nav-btn" data-section="dadka">
+      👥 Dadka
+    </button>
+
+    <button class="nav-btn" data-section="addPerson">
+      ➕ Ku dar qof
+    </button>
+
+    <button class="nav-btn" data-section="kharashaad">
+      💰 Kharashaad
+    </button>
+
+    <button class="nav-btn" data-section="xogtaGelitaanka">🕒 Xogta Gelitaanka</button>
+
+    <button class="nav-btn" data-section="reports">
+      📑 Warbixinnada
+    </button>
+
+    <button class="nav-btn" data-section="settings">
+      ⚙️ Settings
+    </button>
+
+    <button class="nav-btn" data-section="admins">
+      👑 Admins
+    </button>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+
+    <div class="status-online">
+      <span class="status-dot"></span>
+      System Online
+    </div>
+
+    <button class="nav-btn" id="logoutButton">
+      🚪 Logout
+    </button>
+
+  </div>
+
+</aside>
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div style="display:flex;align-items:center;gap:10px">
+
+    <button class="mobile-menu" id="mobileMenu">
+      ☰
+    </button>
+
+    <div class="topbar-title">
+      <h1 id="pageTitle">Warbixin Guud</h1>
+      <p>Qaaraanka Sanadlaha ee Reer Taawle</p>
+    </div>
+
+  </div>
+
+  <div class="top-actions">
+
+    <button class="btn btn-light btn-sm" id="refreshButton">
+      🔄 Cusboonaysii
+    </button>
+
+  </div>
+
+</header>
+
+<div class="container">
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="section active" id="dashboard">
+
+  <div class="welcome">
+
+    <h2>Kusoo dhawaaw Website-ka Reer Taawle 💚</h2>
+
+    <p>
+      Maamulka iyo la socodka qaaraanka sannadlaha,
+      kharashaadka iyo warbixinnada maaliyadeed.
+    </p>
+
+  </div>
+
+  <div class="cards">
+
+    <div class="card stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-label">Tirada Dadka</div>
+      <div class="stat-value" id="totalDadka">0</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-label">Wadarta Sannadlaha</div>
+      <div class="stat-value green-text" id="totalSanadlaha">0.00</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-label">La Bixiyay</div>
+      <div class="stat-value blue-text" id="totalBixiyay">0.00</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-label">Ka Dhiman</div>
+      <div class="stat-value danger-text" id="totalKaDhiman">0.00</div>
+    </div>
+
+  </div>
+
+  <div class="status-grid">
+
+    <div class="status-card">
+      <div class="status-left">
+        <span>✅</span>
+        <strong>Bixiyay</strong>
+      </div>
+      <div class="status-number green-text" id="paidCount">0</div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-left">
+        <span>🟡</span>
+        <strong>Qayb bixiyay</strong>
+      </div>
+      <div class="status-number warning-text" id="partialCount">0</div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-left">
+        <span>❌</span>
+        <strong>Ma bixin</strong>
+      </div>
+      <div class="status-number danger-text" id="unpaidCount">0</div>
+    </div>
+
+  </div>
+
+  <div class="cards">
+
+    <div class="card stat-card">
+      <div class="stat-icon">💸</div>
+      <div class="stat-label">Wadarta Kharashaadka</div>
+      <div class="stat-value danger-text" id="totalExpenses">0.00</div>
+    </div>
+<div class="card stat-card">
+      <div class="stat-icon">💵</div>
+      <div class="stat-label">Lacagta Hadhaaga</div>
+      <div class="stat-value green-text" id="balanceAmount">0.00</div>
+    </div>
+
+    <div class="card stat-card">
+
+      <div class="stat-icon">⚡</div>
+
+      <div class="stat-label">
+        Ficillada Degdegga ah
+      </div>
+
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:12px">
+
+        <button class="btn btn-primary btn-sm" onclick="showSection('addPerson')">
+          ➕ Qof
+        </button>
+
+        <button class="btn btn-light btn-sm" onclick="showSection('kharashaad')">
+          💰 Kharash
+        </button>
+
+        <button class="btn btn-light btn-sm" onclick="showSection('reports')">
+          📑 Reports
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= DADKA ================= -->
+
+<section class="section" id="dadka">
+
+  <div class="toolbar">
+
+    <div class="toolbar-left">
+
+      <input
+        class="search"
+        id="searchInput"
+        type="search"
+        placeholder="Raadi magac ama telefoon..."
+      >
+
+    </div>
+
+    <div class="toolbar-right">
+
+      <button class="btn btn-primary" onclick="showSection('addPerson')">
+        ➕ Ku dar qof
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="table-card">
+
+    <div class="table-scroll">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>#</th>
+            <th>Magaca</th>
+            <th>Lambarka</th>
+            <th>Sannadlaha</th>
+            <th>La Bixiyay</th>
+            <th>Ka Dhiman</th>
+            <th>Xaaladda</th>
+            <th>Taariikhda</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="peopleTableBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= ADD PERSON ================= -->
+
+<section class="section" id="addPerson">
+
+  <div class="form-card">
+
+    <h2 id="personFormTitle" style="margin-bottom:6px">
+      ➕ Ku dar qof cusub
+    </h2>
+
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px">
+      Geli xogta qofka iyo qaaraankiisa sannadlaha.
+    </p>
+
+    <form id="personForm">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label>Magaca *</label>
+
+          <input
+            id="magaca"
+            type="text"
+            required
+            placeholder="Magaca qofka"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Lambarka *</label>
+
+          <input
+            id="lambarka"
+            type="text"
+            required
+            placeholder="Lambarka telefoonka"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Sannadlaha *</label>
+
+          <input
+            id="sanadlaha"
+            type="number"
+            min="0.01"
+            step="0.01"
+            required
+            placeholder="0.00"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>La Bixiyay</label>
+
+          <input
+            id="bixiyay"
+            type="number"
+            min="0"
+            step="0.01"
+            value="0"
+            placeholder="0.00"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Taariikhda</label>
+
+          <input
+            id="taariikh"
+            type="date"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          id="saveButton"
+        >
+          💾 Kaydi
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-light"
+          id="cancelButton"
+        >
+          ❌ Jooji
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- ================= KHARASH ================= -->
+
+<section class="section" id="kharashaad">
+
+  <div class="toolbar">
+
+    <div>
+
+      <h2>💰 Kharashaad</h2>
+
+      <p style="color:var(--muted);font-size:13px;margin-top:4px">
+        Maamul oo la soco dhammaan kharashaadka.
+      </p>
+
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="openExpenseModal()"
+    >
+      ➕ Ku dar kharash
+    </button>
+
+  </div>
+
+  <div class="cards">
+
+    <div class="card stat-card">
+      <div class="stat-icon">💸</div>
+      <div class="stat-label">Wadarta Kharashaadka</div>
+      <div class="stat-value danger-text" id="expenseTotal">0.00</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-label">Tirada Kharashaadka</div>
+      <div class="stat-value" id="expenseCount">0</div>
+    </div>
+
+  </div>
+
+  <div class="table-card">
+
+    <div class="table-scroll">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>#</th>
+            <th>Kharashka</th>
+            <th>Lacagta</th>
+            <th>Taariikhda</th>
+            <th>Faahfaahinta</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="expensesTableBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= XOGTA GELITAANKA ================= -->
+<section class="section" id="xogtaGelitaanka"><div class="toolbar"><div><h2>📋 Xogta Gelitaanka iyo Ficillada</h2><p style="color:var(--muted);font-size:13px;margin-top:4px">La soco cidda gashay website-ka iyo ficillada ay sameeyeen.</p></div><button class="btn btn-light" id="refreshEntryLogButton">🔄 Cusboonaysii</button></div><div class="table-card"><div class="table-responsive"><table><thead><tr><th>#</th><th>Magaca</th><th>Ficilka</th><th>Faahfaahinta</th><th>Taariikhda</th><th>Waqtiga</th><th>Action</th></tr></thead><tbody id="entryLogTableBody"><tr><td colspan="7">Xogta weli lama soo qaadin.</td></tr></tbody></table></div></div></section>
+
+<!-- ================= REPORTS ================= -->
+
+<section class="section" id="reports">
+
+  <div class="report-box">
+
+    <h2>📑 Warbixinnada</h2>
+
+    <p style="color:var(--muted);font-size:13px;margin-top:5px">
+      Ka samee warbixin dhamaystiran oo ku saabsan qaaraanka.
+    </p>
+
+    <div class="report-buttons">
+
+      <button
+        class="btn btn-primary"
+        onclick="printReport()"
+      >
+        🖨️ PDF / Print
+      </button>
+
+      <button
+        class="btn btn-blue"
+        onclick="downloadWord()"
+      >
+        📄 Word
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="cards" style="margin-top:20px">
+
+    <div class="card">
+      <div class="stat-label">Tirada Dadka</div>
+      <div class="stat-value" id="reportPeople">0</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Sannadlaha</div>
+      <div class="stat-value green-text" id="reportAnnual">0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">La Bixiyay</div>
+      <div class="stat-value blue-text" id="reportPaid">0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Ka Dhiman</div>
+      <div class="stat-value danger-text" id="reportRemaining">0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Kharashaadka</div>
+      <div class="stat-value danger-text" id="reportExpenses">0.00</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Hadhaaga Lacagta</div>
+      <div class="stat-value green-text" id="reportBalance">0.00</div>
+    </div>
+
+  </div>
+
+  <div class="table-card" style="margin-top:20px">
+
+    <div class="table-scroll">
+
+      <table id="reportTable">
+
+        <thead>
+
+          <tr>
+            <th>#</th>
+            <th>Magaca</th>
+            <th>Lambarka</th>
+            <th>Sannadlaha</th>
+            <th>La Bixiyay</th>
+            <th>Ka Dhiman</th>
+            <th>Xaaladda</th>
+            <th>Taariikhda</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="reportTableBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= SETTINGS ================= -->
+
+<section class="section" id="settings">
+
+  <div class="form-card">
+
+    <h2>⚙️ Settings</h2>
+
+    <div class="setting-row">
+
+      <div class="setting-info">
+
+        <strong>Theme</strong>
+
+        <span>Dooro muuqaalka website-ka.</span>
+
+      </div>
+
+      <select id="themeSelect" style="width:150px">
+
+        <option value="light">☀️ Light</option>
+        <option value="dark">🌙 Dark</option>
+
+      </select>
+
+    </div>
+
+    <div class="setting-row">
+
+      <div class="setting-info">
+
+        <strong>🔗 Share Link</strong>
+
+        <span>
+          La wadaag website-ka dadka kale.
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="share-box">
+
+      <input
+        id="shareLink"
+        type="text"
+        readonly
+      >
+
+      <button
+        class="btn btn-primary"
+        id="copyShareButton"
+      >
+        📋 Copy
+      </button>
+
+      <button
+        class="btn btn-light"
+        id="shareButton"
+      >
+        🔗 Share
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= ADMINS ================= -->
+
+<section class="section" id="admins">
+
+  <div class="form-card">
+
+    <h2>👑 Admins</h2>
+
+    <p style="color:var(--muted);font-size:13px;margin-top:7px">
+      Qaybtan waxaa loo diyaariyay maamulka nidaamka.
+    </p>
+
+    <div style="margin-top:25px;padding:20px;background:#f4f8f6;border-radius:14px">
+
+      <strong>🔐 Maamulka Admin-ka</strong>
+
+      <p style="color:var(--muted);font-size:13px;margin-top:7px">
+        Xogta qaaraanka iyo kharashaadka waxaa lagu kaydiyaa
+        Google Sheet-ka ku xiran Apps Script.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- ================= PERSON EDIT MODAL ================= -->
+
+<div class="modal" id="personModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <div>
+        <h2>✏️ Wax ka beddel qof</h2>
+      </div>
+
+      <button class="close-btn" onclick="closePersonModal()">×</button>
+
+    </div>
+
+    <form id="editPersonForm">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label>Magaca *</label>
+
+          <input id="editMagaca" required>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Lambarka *</label>
+
+          <input id="editLambarka" required>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Sannadlaha *</label>
+
+          <input
+            id="editSanadlaha"
+            type="number"
+            min="0.01"
+            step="0.01"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>La Bixiyay</label>
+
+          <input
+            id="editBixiyay"
+            type="number"
+            min="0"
+            step="0.01"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Taariikhda</label>
+
+          <input id="editTaariikh" type="date">
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button class="btn btn-primary" type="submit">
+          💾 Cusboonaysii
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-light"
+          onclick="closePersonModal()"
+        >
+          Jooji
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- ================= EXPENSE MODAL ================= -->
+
+<div class="modal" id="expenseModal">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <h2 id="expenseModalTitle">➕ Ku dar kharash</h2>
+
+      <button class="close-btn" onclick="closeExpenseModal()">×</button>
+
+    </div>
+
+    <form id="expenseForm">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label>Kharashka *</label>
+
+          <input
+            id="expenseName"
+            required
+            placeholder="Tusaale: Koronto"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Lacagta *</label>
+
+          <input
+            id="expenseAmount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            required
+            placeholder="0.00"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Taariikhda *</label>
+
+          <input
+            id="expenseDate"
+            type="date"
+            required
+          >
+
+        </div>
+
+        <div class="form-group full">
+
+          <label>Faahfaahinta</label>
+
+          <textarea
+            id="expenseDetails"
+            placeholder="Faahfaahin dheeraad ah..."
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          💾 Kaydi
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-light"
+          onclick="closeExpenseModal()"
+        >
+          Jooji
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast"></div>
+
+<!-- ================= LOADING ================= -->
+
+<div class="loading" id="loading">
+
+  <div class="loading-box">
+
+    <div class="spinner"></div>
+
+    <strong id="loadingText">Xogta ayaa la soo rarayaa...</strong>
+
+  </div>
+
+</div>
+
+<script>
+
+/* =====================================================
+   GOOGLE APPS SCRIPT
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyO3z-QbCf-LDLHbXz-3nM7f42M0YWnLH9upgwbtmJA72cjL56NFQ5rWenZq_X7bd3d/exec"
+
+/* =====================================================
+   DATA
+===================================================== */
+
+const THEME_KEY = "qaaraanTheme";
+
+let dadka = [];
+let expenses = [];
+let entryLogs = [];
+let entryToken = null;
+
+let editingId = null;
+let editingExpenseId = null;
+
+const $ = id => document.getElementById(id);
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  setupNavigation();
+  setupForms();
+  setupSearch();
+  setupSettings();
+  setupMobileMenu();
+
+  applyTheme();
+  setDefaultDates();
+  setupEntryForm();
+  const refreshEntryLogButton = $("refreshEntryLogButton");
+  if (refreshEntryLogButton) refreshEntryLogButton.addEventListener("click", () => loadEntryLogs().catch(error => showToast(error.message, true)));
+
+});
+
+
+/* ================= XOGTA GELITAANKA ================= */
+function setupEntryForm(){
+ const form=$("entryForm"); if(!form)return;
+ form.addEventListener("submit",async event=>{
+  event.preventDefault(); const magaca=$("entryName").value.trim(); const code=$("entryCode").value;
+  const err=$("entryError"),btn=$("entrySubmit"); err.style.display="none";
+  if(!magaca||!code){err.textContent="Fadlan buuxi magaca iyo furaha gelitaanka.";err.style.display="block";return;}
+  btn.disabled=true;btn.textContent="Waa la xaqiijinayaa...";
+  try{const result=await apiPost({action:"verifyEntry",magaca,code});if(!result.success)throw new Error(result.error||"Magaca ama furaha gelitaanka waa khalad.");
+   entryToken = result.token;
+   $("entryOverlay").classList.add("hidden");$("entryCode").value="";await loadAllData();showToast("Waad soo gashay, soo dhowow "+magaca+".");
+  }catch(error){err.textContent=error.message||"Gelitaanka waa fashilmay. Mar kale isku day.";err.style.display="block";}
+  finally{btn.disabled=false;btn.textContent="🔓 Gal website-ka";}
+ });
+}
+async function loadEntryLogs() {
+  const body = $("entryLogTableBody");
+  if (!body) return;
+
+  body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px">Diiwaanka ficillada ayaa la soo rarayaa...</td></tr>';
+
+  const data = await apiGet("getXogtaGelitaanka");
+  entryLogs = Array.isArray(data.xogtaGelitaanka) ? data.xogtaGelitaanka : [];
+
+  if (!entryLogs.length) {
+    body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px">Weli wax ficil ah lama diiwaangelin.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = entryLogs.slice().reverse().map((row, index) => {
+    const id = String(row.id ?? "");
+    const action = row.ficilka || "Gelitaan";
+    const details = row.faahfaahinta || "Wuxuu soo galay website-ka.";
+    const deleteButton = id
+      ? `<button class="btn btn-danger btn-sm" type="button" onclick="deleteEntryLog('${escapeJS(id)}')">🗑️ Tirtir</button>`
+      : `<button class="btn btn-danger btn-sm" type="button" disabled>Diiwaan</button>`;
+
+    return `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${escapeHTML(row.magaca || row.isticmaalaha || "")}</td>
+        <td>${escapeHTML(action)}</td>
+        <td>${escapeHTML(details)}</td>
+        <td>${escapeHTML(row.taariikhda || "")}</td>
+        <td>${escapeHTML(row.waqtiga || "")}</td>
+        <td>${deleteButton}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+async function deleteEntryLog(id) {
+  if (!id) {
+    showToast("Diiwaankan lama aqoonsan.", true);
+    return;
+  }
+
+  const record = entryLogs.find(row => String(row.id ?? "") === String(id));
+  const magaca = record
+    ? (record.magaca || record.isticmaalaha || "qofkan")
+    : "diiwaankan";
+
+  if (!confirm(`Ma hubtaa inaad tirtirayso diiwaanka gelitaanka ee ${magaca}?
+
+Fiiro gaar ah: Tirtiristu waxay ka saari doontaa Google Sheets sidoo kale.`)) {
+    return;
+  }
+
+  try {
+    showLoading("Diiwaanka gelitaanka waa la tirtirayaa...");
+
+    const result = await apiPost({
+      action: "deleteEntryLog",
+      id: String(id)
+    });
+
+    if (result.success === false) {
+      throw new Error(result.error || "Diiwaanka lama tirtiri karin.");
+    }
+
+    await loadEntryLogs();
+    showToast(result.message || "Diiwaanka gelitaanka waa la tirtiray.");
+  } catch (error) {
+    console.error("deleteEntryLog error:", error);
+    showToast("Diiwaanka lama tirtirin: " + (error.message || "Khalad ayaa dhacay."), true);
+  } finally {
+    hideLoading();
+  }
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+function showLoading(text = "Xogta ayaa la soo rarayaa...") {
+
+  $("loadingText").textContent = text;
+  $("loading").classList.add("show");
+
+}
+
+function hideLoading() {
+
+  $("loading").classList.remove("show");
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message, error = false) {
+
+  const toast = $("toast");
+
+  toast.textContent = message;
+
+  toast.classList.toggle("error", error);
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function setupNavigation() {
+
+  document
+    .querySelectorAll(".nav-btn[data-section]")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        showSection(button.dataset.section);
+
+        $("sidebar").classList.remove("open");
+
+      });
+
+    });
+
+}
+
+
+function showSection(sectionId) {
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section => {
+      section.classList.remove("active");
+    });
+
+
+  const section = $(sectionId);
+
+  if (section) {
+    section.classList.add("active");
+  }
+
+
+  document
+    .querySelectorAll(".nav-btn[data-section]")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.section === sectionId
+      );
+
+    });
+
+
+  const titles = {
+    dashboard: "Warbixin Guud",
+    dadka: "Dadka",
+    addPerson: "Ku dar qof",
+    kharashaad: "Kharashaad",
+    xogtaGelitaanka: "Xogta Gelitaanka",
+    reports: "Warbixinnada",
+    settings: "Settings",
+    admins: "Admins"
+  };
+
+
+  $("pageTitle").textContent =
+    titles[sectionId] || "Qaaraanka";
+
+
+  if (sectionId === "reports") {
+    renderReport();
+  }
+
+
+  if (sectionId === "xogtaGelitaanka") {
+    loadEntryLogs().catch(error => showToast("Xogta gelitaanka lama soo qaadi karin: " + error.message, true));
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+function setupMobileMenu() {
+
+  $("mobileMenu").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+  });
+
+}
+
+
+/* =====================================================
+   LOAD EVERYTHING
+===================================================== */
+
+async function loadAllData() {
+
+  showLoading(
+    "Xogta Google Sheet-ka ayaa la soo rarayaa..."
+  );
+
+  try {
+
+    await Promise.all([
+      loadPeople(),
+      loadExpenses()
+    ]);
+
+    updateDashboard();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "Xogta lama soo qaadi karin: " + error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   GET API
+===================================================== */
+
+async function apiGet(action = "") {
+
+  let url = API_URL;
+
+  const params = new URLSearchParams();
+  if (action) params.set("action", action);
+  params.set("t", Date.now());
+  if (entryToken) params.set("token", entryToken);
+  url += "?" + params.toString();
+
+
+  const response = await fetch(url, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "GET request failed: " + response.status
+    );
+
+  }
+
+
+  const data = await response.json();
+
+
+  if (data.success === false) {
+
+    throw new Error(
+      data.error || "Server error"
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =====================================================
+   POST API
+===================================================== */
+
+async function apiPost(payload) {
+
+  const outgoing = {...payload};
+  if (outgoing.action !== "verifyEntry" && entryToken) outgoing.token = entryToken;
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {"Content-Type": "text/plain;charset=utf-8"},
+    body: JSON.stringify(outgoing)
+  });
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "POST request failed: " + response.status
+    );
+
+  }
+
+
+  const data = await response.json();
+
+
+  if (data.success === false) {
+
+    throw new Error(
+      data.error || "Server error"
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =====================================================
+   PEOPLE - LOAD
+===================================================== */
+
+async function loadPeople() {
+
+  const data = await apiGet();
+
+  if (Array.isArray(data)) {
+
+    dadka = data.map(normalizePerson);
+
+  } else {
+
+    dadka =
+      Array.isArray(data.dadka)
+        ? data.dadka.map(normalizePerson)
+        : [];
+
+  }
+
+
+  renderPeople();
+
+}
+
+
+/* =====================================================
+   PEOPLE - NORMALIZE
+===================================================== */
+
+function normalizePerson(person) {
+
+  const annual = Number(
+    person.annual ??
+    person.sanadlaha ??
+    0
+  );
+
+
+  const paid = Number(
+    person.paid ??
+    person.bixiyay ??
+    0
+  );
+
+
+  const remaining = Math.max(
+    0,
+    annual - paid
+  );
+
+
+  let status;
+
+  if (remaining <= 0) {
+
+    status = "paid";
+
+  } else if (paid > 0) {
+
+    status = "partial";
+
+  } else {
+
+    status = "unpaid";
+
+  }
+
+
+  return {
+
+    id: String(person.id ?? ""),
+
+    name: String(
+      person.name ??
+      person.magaca ??
+      ""
+    ),
+
+    phone: String(
+      person.phone ??
+      person.lambarka ??
+      ""
+    ),
+
+    annual,
+
+    paid,
+
+    remaining,
+
+    status,
+
+    date: String(
+      person.date ??
+      person.taariikh ??
+      ""
+    )
+
+  };
+
+}
+
+
+/* =====================================================
+   PEOPLE - RENDER
+===================================================== */
+
+function renderPeople() {
+
+  const body = $("peopleTableBody");
+
+  const search =
+    ($("searchInput").value || "")
+      .trim()
+      .toLowerCase();
+
+
+  const filtered = dadka.filter(person => {
+
+    return (
+      person.name
+        .toLowerCase()
+        .includes(search)
+
+      ||
+
+      person.phone
+        .toLowerCase()
+        .includes(search)
+    );
+
+  });
+
+
+  if (!filtered.length) {
+
+    body.innerHTML = `
+
+      <tr>
+
+        <td colspan="9">
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              👥
+            </div>
+
+            <strong>
+              Dad lama helin
+            </strong>
+
+            <p style="margin-top:5px">
+              Ku dar qof cusub si xogtu halkan uga muuqato.
+            </p>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  body.innerHTML = filtered
+    .map((person, index) => {
+
+      return `
+
+        <tr>
+
+          <td>${index + 1}</td>
+
+          <td>
+            <strong>
+              ${escapeHTML(person.name)}
+            </strong>
+          </td>
+
+          <td>
+            ${escapeHTML(person.phone)}
+          </td>
+
+          <td>
+            ${money(person.annual)}
+          </td>
+
+          <td>
+            ${money(person.paid)}
+          </td>
+
+          <td>
+            ${money(person.remaining)}
+          </td>
+
+          <td>
+            ${getStatusBadge(person.status)}
+          </td>
+
+          <td>
+            ${escapeHTML(person.date)}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="btn btn-blue btn-sm"
+                onclick="editPerson('${escapeJS(person.id)}')"
+              >
+                ✏️
+              </button>
+
+              <button
+                class="btn btn-danger btn-sm"
+                onclick="deletePerson('${escapeJS(person.id)}')"
+              >
+                🗑️
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    })
+    .join("");
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function getStatusBadge(status) {
+
+  if (status === "paid") {
+
+    return `
+      <span class="badge badge-paid">
+        ✅ Bixiyay
+      </span>
+    `;
+
+  }
+
+
+  if (status === "partial") {
+
+    return `
+      <span class="badge badge-partial">
+        🟡 Qayb bixiyay
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="badge badge-unpaid">
+      ❌ Ma bixin
+    </span>
+  `;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function setupSearch() {
+
+  $("searchInput").addEventListener(
+    "input",
+    renderPeople
+  );
+
+}
+
+
+/* =====================================================
+   FORMS
+===================================================== */
+
+function setupForms() {
+
+  $("personForm").addEventListener(
+    "submit",
+    savePerson
+  );
+
+
+  $("editPersonForm").addEventListener(
+    "submit",
+    updatePerson
+  );
+
+
+  $("expenseForm").addEventListener(
+    "submit",
+    saveExpense
+  );
+
+
+  $("cancelButton").addEventListener(
+    "click",
+    resetPersonForm
+  );
+
+
+  $("refreshButton").addEventListener(
+    "click",
+    loadAllData
+  );
+
+
+
+
+}
+
+
+/* =====================================================
+   SAVE PERSON
+===================================================== */
+
+async function savePerson(event) {
+
+  event.preventDefault();
+
+  const name = $("magaca").value.trim();
+  const phone = $("lambarka").value.trim();
+  const annual = Number($("sanadlaha").value);
+  const paid = Number($("bixiyay").value || 0);
+  const date = $("taariikh").value;
+
+
+  if (!name || !phone) {
+
+    showToast(
+      "Magaca iyo lambarka waa qasab.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (annual <= 0) {
+
+    showToast(
+      "Sannadlaha waa inuu ka weyn yahay 0.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (paid < 0) {
+
+    showToast(
+      "Lacagta la bixiyay ma noqon karto wax ka yar 0.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (paid > annual) {
+
+    showToast(
+      "Lacagta la bixiyay kama badnaan karto sannadlaha.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const duplicate =
+    dadka.some(
+      person => person.phone === phone
+    );
+
+
+  if (duplicate) {
+
+    showToast(
+      "Lambarkan hore ayaa loo diiwaangeliyay.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    showLoading(
+      "Qofka Google Sheet-ka ayaa lagu kaydinayaa..."
+    );
+
+
+    await apiPost({
+
+      action: "kuDarQof",
+
+      id: Date.now().toString(),
+
+      magaca: name,
+
+      lambarka: phone,
+
+      sanadlaha: annual,
+
+      bixiyay: paid,
+
+      taariikh: date
+
+    });
+
+
+    await loadPeople();
+
+
+        updateDashboard();
+
+    resetPersonForm();
+
+    showSection("dadka");
+
+
+    showToast(
+      "Qofka si guul leh ayaa loo kaydiyay."
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "Qofka lama kaydin: " + error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   EDIT PERSON
+===================================================== */
+
+function editPerson(id) {
+
+  const person =
+    dadka.find(
+      p => String(p.id) === String(id)
+    );
+
+
+  if (!person) {
+
+    showToast(
+      "Qofka lama helin.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  editingId = id;
+
+  $("editMagaca").value = person.name;
+  $("editLambarka").value = person.phone;
+  $("editSanadlaha").value = person.annual;
+  $("editBixiyay").value = person.paid;
+  $("editTaariikh").value = person.date || "";
+
+
+  $("personModal").classList.add("show");
+
+}
+
+
+/* =====================================================
+   CLOSE PERSON MODAL
+===================================================== */
+
+function closePersonModal() {
+
+  $("personModal").classList.remove("show");
+
+  editingId = null;
+
+}
+
+
+/* =====================================================
+   UPDATE PERSON
+===================================================== */
+
+async function updatePerson(event) {
+
+  event.preventDefault();
+
+
+  if (!editingId) return;
+
+
+  const name = $("editMagaca").value.trim();
+  const phone = $("editLambarka").value.trim();
+  const annual = Number($("editSanadlaha").value);
+  const paid = Number($("editBixiyay").value || 0);
+  const date = $("editTaariikh").value;
+
+
+  if (!name || !phone) {
+
+    showToast(
+      "Magaca iyo lambarka waa qasab.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (annual <= 0) {
+
+    showToast(
+      "Sannadlaha waa inuu ka weyn yahay 0.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (paid < 0 || paid > annual) {
+
+    showToast(
+      "Lacagta la bixiyay waa inay u dhexeysaa 0 iyo sannadlaha.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const duplicate =
+    dadka.some(
+      person =>
+        String(person.id) !== String(editingId) &&
+        person.phone === phone
+    );
+
+
+  if (duplicate) {
+
+    showToast(
+      "Lambarkan qof kale ayaa isticmaalaya.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    showLoading(
+      "Xogta ayaa la cusboonaysiinayaa..."
+    );
+
+
+    await apiPost({
+
+      action: "waxKaBedel",
+
+      id: String(editingId),
+
+      magaca: name,
+
+      lambarka: phone,
+
+      sanadlaha: annual,
+
+      bixiyay: paid,
+
+      taariikh: date
+
+    });
+
+
+    await loadPeople();
+
+
+        updateDashboard();
+
+    closePersonModal();
+
+
+    showToast(
+      "Xogta qofka waa la cusboonaysiiyay."
+    );
+
+
+  } catch (error) {
+
+    showToast(
+      "Xogta lama cusboonaysiin: " +
+      error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   DELETE PERSON
+===================================================== */
+
+async function deletePerson(id) {
+
+  const person =
+    dadka.find(
+      p => String(p.id) === String(id)
+    );
+
+
+  if (!person) return;
+
+
+  const ok =
+    confirm(
+      `Ma hubtaa inaad tirtirayso "${person.name}"?`
+    );
+
+
+  if (!ok) return;
+
+
+  try {
+
+    showLoading(
+      "Qofka ayaa la tirtirayaa..."
+    );
+
+
+    await apiPost({
+
+      action: "tirtirQof",
+
+      id: String(id)
+
+    });
+
+
+    await loadPeople();
+
+
+        updateDashboard();
+
+
+    showToast(
+      "Qofka waa la tirtiray."
+    );
+
+
+  } catch (error) {
+
+    showToast(
+      "Qofka lama tirtirin: " +
+      error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   RESET PERSON FORM
+===================================================== */
+
+function resetPersonForm() {
+
+  $("personForm").reset();
+
+  $("bixiyay").value = 0;
+
+  $("taariikh").value = getToday();
+
+  editingId = null;
+
+  $("personFormTitle").textContent =
+    "➕ Ku dar qof cusub";
+
+}
+
+
+/* =====================================================
+   EXPENSES
+===================================================== */
+
+async function loadExpenses() {
+
+  const data =
+    await apiGet("getKharashaad");
+
+
+  expenses =
+    Array.isArray(data.kharashaad)
+      ? data.kharashaad.map(normalizeExpense)
+      : [];
+
+
+  renderExpenses();
+
+}
+
+
+function normalizeExpense(item) {
+
+  return {
+
+    id: String(item.id ?? ""),
+
+    name: String(
+      item.name ??
+      item.kharashka ??
+      ""
+    ),
+
+    amount: Number(
+      item.amount ??
+      item.lacagta ??
+      0
+    ),
+
+    date: String(
+      item.date ??
+      item.taariikhda ??
+      ""
+    ),
+
+    details: String(
+      item.details ??
+      item.faahfaahinta ??
+      ""
+    )
+
+  };
+
+}
+
+
+function renderExpenses() {
+
+  const body = $("expensesTableBody");
+
+
+  if (!expenses.length) {
+
+    body.innerHTML = `
+
+      <tr>
+
+        <td colspan="6">
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              💰
+            </div>
+
+            <strong>
+              Weli kharash lama gelin
+            </strong>
+
+            <p style="margin-top:5px">
+              Ku dar kharash cusub.
+            </p>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  } else {
+
+    body.innerHTML =
+      expenses
+        .map((expense, index) => `
+
+          <tr>
+
+            <td>${index + 1}</td>
+
+            <td>
+              <strong>
+                ${escapeHTML(expense.name)}
+              </strong>
+            </td>
+
+            <td>
+              <strong>
+                ${money(expense.amount)}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHTML(expense.date)}
+            </td>
+
+            <td>
+              ${escapeHTML(expense.details || "-")}
+            </td>
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  class="btn btn-blue btn-sm"
+                  onclick="editExpense('${escapeJS(expense.id)}')"
+                >
+                  ✏️
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="deleteExpense('${escapeJS(expense.id)}')"
+                >
+                  🗑️
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `)
+        .join("");
+
+  }
+
+
+  const total =
+    expenses.reduce(
+      (sum, item) =>
+        sum + Number(item.amount || 0),
+      0
+    );
+
+
+  $("expenseTotal").textContent = money(total);
+  $("expenseCount").textContent = expenses.length;
+
+}
+
+
+function openExpenseModal() {
+
+  editingExpenseId = null;
+
+  $("expenseModalTitle").textContent =
+    "➕ Ku dar kharash";
+
+  $("expenseForm").reset();
+
+  $("expenseDate").value = getToday();
+
+  $("expenseModal").classList.add("show");
+
+}
+
+
+function closeExpenseModal() {
+
+  $("expenseModal").classList.remove("show");
+
+  editingExpenseId = null;
+
+}
+
+
+/* =====================================================
+   SAVE EXPENSE
+===================================================== */
+
+async function saveExpense(event) {
+
+  event.preventDefault();
+
+
+  const name = $("expenseName").value.trim();
+  const amount = Number($("expenseAmount").value);
+  const date = $("expenseDate").value;
+  const details = $("expenseDetails").value.trim();
+
+
+  if (!name) {
+
+    showToast(
+      "Magaca kharashka waa qasab.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (amount <= 0) {
+
+    showToast(
+      "Lacagta kharashka waa inay ka weyn tahay 0.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (!date) {
+
+    showToast(
+      "Taariikhda geli.",
+      true
+    );
+
+    return;
+
+  }
+
+
+  const wasEditing =
+    Boolean(editingExpenseId);
+
+
+  try {
+
+    showLoading(
+      wasEditing
+        ? "Kharashka ayaa la cusboonaysiinayaa..."
+        : "Kharashka ayaa la kaydinayaa..."
+    );
+
+
+    if (wasEditing) {
+
+      await apiPost({
+
+        action: "waxKaBedelKharash",
+
+        id: String(editingExpenseId),
+
+        kharashka: name,
+
+        lacagta: amount,
+
+        taariikhda: date,
+
+        faahfaahinta: details
+
+      });
+
+
+          } else {
+
+      await apiPost({
+
+        action: "kuDarKharash",
+
+        id: Date.now().toString(),
+
+        kharashka: name,
+
+        lacagta: amount,
+
+        taariikhda: date,
+
+        faahfaahinta: details
+
+      });
+
+
+          }
+
+
+    await loadExpenses();
+
+    updateDashboard();
+
+    closeExpenseModal();
+
+
+    showToast(
+      wasEditing
+        ? "Kharashka waa la cusboonaysiiyay."
+        : "Kharashka waa la kaydiyay."
+    );
+
+
+  } catch (error) {
+
+    showToast(
+      "Kharashka lama kaydin: " +
+      error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   EDIT EXPENSE
+===================================================== */
+
+function editExpense(id) {
+
+  const expense =
+    expenses.find(
+      e => String(e.id) === String(id)
+    );
+
+
+  if (!expense) return;
+
+
+  editingExpenseId = id;
+
+
+  $("expenseModalTitle").textContent =
+    "✏️ Wax ka beddel kharash";
+
+
+  $("expenseName").value = expense.name;
+  $("expenseAmount").value = expense.amount;
+  $("expenseDate").value = expense.date;
+  $("expenseDetails").value = expense.details;
+
+
+  $("expenseModal").classList.add("show");
+
+}
+
+
+/* =====================================================
+   DELETE EXPENSE
+===================================================== */
+
+async function deleteExpense(id) {
+
+  const expense =
+    expenses.find(
+      e => String(e.id) === String(id)
+    );
+
+
+  if (!expense) return;
+
+
+  const ok =
+    confirm(
+      `Ma hubtaa inaad tirtirayso "${expense.name}"?`
+    );
+
+
+  if (!ok) return;
+
+
+  try {
+
+    showLoading(
+      "Kharashka ayaa la tirtirayaa..."
+    );
+
+
+    await apiPost({
+
+      action: "tirtirKharash",
+
+      id: String(id)
+
+    });
+
+
+    await loadExpenses();
+
+
+        updateDashboard();
+
+
+    showToast(
+      "Kharashka waa la tirtiray."
+    );
+
+
+  } catch (error) {
+
+    showToast(
+      "Kharashka lama tirtirin: " +
+      error.message,
+      true
+    );
+
+  } finally {
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function updateDashboard() {
+
+  const totalPeople = dadka.length;
+
+
+  const annual =
+    dadka.reduce(
+      (sum, p) =>
+        sum + Number(p.annual || 0),
+      0
+    );
+
+
+  const paid =
+    dadka.reduce(
+      (sum, p) =>
+        sum + Number(p.paid || 0),
+      0
+    );
+
+
+  const remaining =
+    Math.max(0, annual - paid);
+
+
+  const paidCount =
+    dadka.filter(
+      p => p.status === "paid"
+    ).length;
+
+
+  const partialCount =
+    dadka.filter(
+      p => p.status === "partial"
+    ).length;
+
+
+  const unpaidCount =
+    dadka.filter(
+      p => p.status === "unpaid"
+    ).length;
+
+
+  const expensesTotal =
+    expenses.reduce(
+      (sum, e) =>
+        sum + Number(e.amount || 0),
+      0
+    );
+
+
+  const balance =
+    paid - expensesTotal;
+
+
+  $("totalDadka").textContent = totalPeople;
+  $("totalSanadlaha").textContent = money(annual);
+  $("totalBixiyay").textContent = money(paid);
+  $("totalKaDhiman").textContent = money(remaining);
+
+  $("paidCount").textContent = paidCount;
+  $("partialCount").textContent = partialCount;
+  $("unpaidCount").textContent = unpaidCount;
+
+  $("totalExpenses").textContent = money(expensesTotal);
+  $("balanceAmount").textContent = money(balance);
+
+  $("reportPeople").textContent = totalPeople;
+  $("reportAnnual").textContent = money(annual);
+  $("reportPaid").textContent = money(paid);
+  $("reportRemaining").textContent = money(remaining);
+  $("reportExpenses").textContent = money(expensesTotal);
+  $("reportBalance").textContent = money(balance);
+
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+function renderReport() {
+
+  const body = $("reportTableBody");
+
+
+  body.innerHTML =
+    dadka
+      .map((person, index) => `
+
+        <tr>
+
+          <td>${index + 1}</td>
+
+          <td>
+            ${escapeHTML(person.name)}
+          </td>
+
+          <td>
+            ${escapeHTML(person.phone)}
+          </td>
+
+          <td>
+            ${money(person.annual)}
+          </td>
+
+          <td>
+            ${money(person.paid)}
+          </td>
+
+          <td>
+            ${money(person.remaining)}
+          </td>
+
+          <td>
+            ${getStatusBadge(person.status)}
+          </td>
+
+          <td>
+            ${escapeHTML(person.date)}
+          </td>
+
+        </tr>
+
+      `)
+      .join("");
+
+}
+
+
+/* =====================================================
+   PRINT / PDF
+===================================================== */
+
+function printReport() {
+
+  showSection("reports");
+
+  setTimeout(() => {
+    window.print();
+  }, 300);
+
+}
+
+
+/* =====================================================
+   WORD
+===================================================== */
+
+function downloadWord() {
+
+  const rows =
+    dadka
+      .map((person, index) => `
+
+        <tr>
+
+          <td>${index + 1}</td>
+          <td>${escapeHTML(person.name)}</td>
+          <td>${escapeHTML(person.phone)}</td>
+          <td>${money(person.annual)}</td>
+          <td>${money(person.paid)}</td>
+          <td>${money(person.remaining)}</td>
+          <td>${statusText(person.status)}</td>
+          <td>${escapeHTML(person.date)}</td>
+
+        </tr>
+
+      `)
+      .join("");
+
+
+  const html = `
+
+    <html>
+
+    <head>
+
+      <meta charset="UTF-8">
+
+      <style>
+
+        body {
+          font-family: Arial;
+        }
+
+        h1 {
+          color: #087f5b;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        th,
+        td {
+          border: 1px solid #ccc;
+          padding: 8px;
+        }
+
+        th {
+          background: #087f5b;
+          color: white;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <h1>
+        Qaaraanka Sanadlaha ee Reer Taawle
+      </h1>
+
+      <p>
+        Warbixinta Dadka
+      </p>
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>#</th>
+            <th>Magaca</th>
+            <th>Lambarka</th>
+            <th>Sannadlaha</th>
+            <th>La Bixiyay</th>
+            <th>Ka Dhiman</th>
+            <th>Xaaladda</th>
+            <th>Taariikhda</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+          ${rows}
+        </tbody>
+
+      </table>
+
+    </body>
+
+    </html>
+
+  `;
+
+
+  const blob =
+    new Blob(
+      ["\ufeff", html],
+      {
+        type: "application/msword"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href = url;
+
+  link.download =
+    "Qaaraanka-Reer-Taawle.doc";
+
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  link.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+function setupSettings() {
+
+  $("themeSelect").addEventListener(
+    "change",
+    event => {
+
+      localStorage.setItem(
+        THEME_KEY,
+        event.target.value
+      );
+
+      applyTheme();
+
+    }
+  );
+
+
+  $("copyShareButton").addEventListener(
+    "click",
+    copyShareLink
+  );
+
+
+  $("shareButton").addEventListener(
+    "click",
+    shareWebsite
+  );
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applyTheme() {
+
+  const theme =
+    localStorage.getItem(THEME_KEY) || "light";
+
+
+  document.body.classList.toggle(
+    "dark",
+    theme === "dark"
+  );
+
+
+  if ($("themeSelect")) {
+    $("themeSelect").value = theme;
+  }
+
+
+  if ($("shareLink")) {
+    $("shareLink").value = getWebsiteLink();
+  }
+
+}
+
+
+/* =====================================================
+   SHARE LINK
+===================================================== */
+
+function getWebsiteLink() {
+
+  return window.location.href;
+
+}
+
+
+async function copyShareLink() {
+
+  const link = getWebsiteLink();
+
+
+  try {
+
+    if (navigator.clipboard) {
+
+      await navigator.clipboard.writeText(link);
+
+    } else {
+
+      $("shareLink").select();
+      document.execCommand("copy");
+
+    }
+
+
+    showToast(
+      "Link-ga waa la koobiyeeyay."
+    );
+
+
+  } catch (error) {
+
+    $("shareLink").select();
+
+    document.execCommand("copy");
+
+    showToast(
+      "Link-ga waa la koobiyeeyay."
+    );
+
+  }
+
+}
+
+
+async function shareWebsite() {
+
+  const link = getWebsiteLink();
+
+
+  if (navigator.share) {
+
+    try {
+
+      await navigator.share({
+
+        title:
+          "Qaaraanka Sanadlaha ee Reer Taawle",
+
+        text:
+          "Ka eeg Qaaraanka Sanadlaha ee Reer Taawle.",
+
+        url: link
+
+      });
+
+      return;
+
+    } catch (error) {
+
+      if (error.name === "AbortError") {
+        return;
+      }
+
+    }
+
+  }
+
+
+  await copyShareLink();
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function getToday() {
+
+  const date = new Date();
+
+  const y =
+    date.getFullYear();
+
+  const m =
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
+
+  const d =
+    String(date.getDate())
+      .padStart(2, "0");
+
+  return `${y}-${m}-${d}`;
+
+}
+
+
+function setDefaultDates() {
+
+  $("taariikh").value = getToday();
+
+  $("expenseDate").value = getToday();
+
+}
+
+
+/* =====================================================
+   MONEY
+===================================================== */
+
+function money(value) {
+
+  return Number(value || 0).toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   STATUS TEXT
+===================================================== */
+
+function statusText(status) {
+
+  if (status === "paid") {
+    return "Bixiyay";
+  }
+
+  if (status === "partial") {
+    return "Qayb bixiyay";
+  }
+
+  return "Ma bixin";
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeJS(value) {
+
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'");
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    $("logoutButton").addEventListener(
+      "click",
+      async () => {
+
+        const ok =
+          confirm(
+            "Ma hubtaa inaad ka baxaysid website-ka?"
+          );
+
+
+        if (!ok) return;
+
+
+                showToast(
+          "Logout ayaa la sameeyay."
+        );
+
+      }
+    );
+
+
+    $("personModal").addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          $("personModal")
+        ) {
+
+          closePersonModal();
+
+        }
+
+      }
+    );
+
+
+    $("expenseModal").addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          $("expenseModal")
+        ) {
+
+          closeExpenseModal();
+
+        }
+
+      }
+    );
+
+  }
+);
+
+</script>
+
+</body>
+</html>
